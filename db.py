@@ -56,5 +56,18 @@ def tasks_all():
     ).fetchall()
     return [dict(row) for row in rows]
 
+def tasks_create(category, date, title, description , status):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        INSERT INTO tasks (category, date, title, description, status)
+        VALUES (?, ?, ?, ?, ?)
+        RETURNING *
+        """,
+        (category, date, title, description , status),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
+
 if __name__ == "__main__":
     initial_setup()
