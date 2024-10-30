@@ -21,7 +21,7 @@ def initial_setup():
           category TEXT,
           date TEXT,
           title TEXT,
-          description TEXT
+          description TEXT,
           status TEXT
         );
         """
@@ -33,12 +33,12 @@ def initial_setup():
         ("Personal", "2024-1-11","Grocery Shopping", "Buy groceries for the week", "Pending"),
         ("Exercise", "2024-29-10", "Working Out", "Go to the gym", "Completed" ),
         ("Academic", "2024-30-10", "Exam Review", "Study for Chemistry exam", "Pending"),
-        ("Work", "2024-03-11", "", "Finish Report", "Complete monthly report", "Pending"),
+        ("Work", "2024-03-11", "Finish Report", "Complete monthly report", "Pending"),
     ]
     conn.executemany(
         """
         INSERT INTO tasks (category, date, title, description, status)
-        VALUES (?,?,?)
+        VALUES (?,?,?,?,?)
         """,
         tasks_seed_data,
     )
@@ -46,6 +46,15 @@ def initial_setup():
     print("Seed data created successfully")
 
     conn.close()
+
+def tasks_all():
+    conn = connect_to_db()
+    rows = conn.execute(
+        """
+        SELECT * FROM tasks
+        """
+    ).fetchall()
+    return [dict(row) for row in rows]
 
 if __name__ == "__main__":
     initial_setup()

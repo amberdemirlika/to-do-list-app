@@ -4,6 +4,6 @@ import db
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello():
-    return 'Hello, World!'
+@app.route("/tasks.json")
+def index():
+    return db.tasks_all()
