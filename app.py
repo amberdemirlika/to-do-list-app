@@ -31,3 +31,7 @@ def update(id):
     description = request.form.get("description")
     status = request.form.get("status")
     return db.tasks_update_by_id(id, category, date, title, description , status)
+
+@app.route("/tasks/<id>.json", methods=["DELETE"])
+def destroy(id):
+    return db.tasks_destroy_by_id(id)

@@ -93,6 +93,17 @@ def tasks_update_by_id(id, category, date, title, description ,status):
     conn.commit()
     return dict(row)
 
+def tasks_destroy_by_id(id):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        DELETE from tasks
+        WHERE id = ?
+        """,
+        (id,),
+    )
+    conn.commit()
+    return {"message": "Task destroyed successfully"}
 
 if __name__ == "__main__":
     initial_setup()
