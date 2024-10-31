@@ -69,5 +69,16 @@ def tasks_create(category, date, title, description , status):
     conn.commit()
     return dict(row)
 
+def tasks_find_by_id(id):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        SELECT * FROM tasks
+        WHERE id = ?
+        """,
+        (id,),
+    ).fetchone()
+    return dict(row)
+
 if __name__ == "__main__":
     initial_setup()

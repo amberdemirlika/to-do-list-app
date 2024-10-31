@@ -16,3 +16,7 @@ def create():
     description = request.form.get("description")
     status = request.form.get("status")
     return db.tasks_create(category, date, title, description , status)
+
+@app.route("/tasks/<id>.json")
+def show(id):
+    return db.tasks_find_by_id(id)
