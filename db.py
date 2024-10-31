@@ -80,5 +80,19 @@ def tasks_find_by_id(id):
     ).fetchone()
     return dict(row)
 
+def tasks_update_by_id(id, category, date, title, description ,status):
+    conn = connect_to_db()
+    row = conn.execute(
+        """
+        UPDATE tasks SET category = ?, date = ?, title = ?, description = ?, status =?
+        WHERE id = ?
+        RETURNING *
+        """,
+        (category, date, title, description , status, id),
+    ).fetchone()
+    conn.commit()
+    return dict(row)
+
+
 if __name__ == "__main__":
     initial_setup()
